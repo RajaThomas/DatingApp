@@ -17,15 +17,20 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MembersDetailComponent } from './members/members-detail/members-detail.component';
 import {appRoutes} from './routes';
 import { AuthGuard } from './_guards/auth.guard';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { AlertifyService } from './_services/alertify.service';
 import { UserService } from './_services/user.service';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { FileUploadModule } from 'ng2-file-upload';
 
 export function tokkenGetter(){
    return localStorage.getItem('token');
@@ -42,7 +47,9 @@ export function tokkenGetter(){
       ListsComponent,
       MessagesComponent,
       MemberCardComponent,
-      MembersDetailComponent
+      MembersDetailComponent,
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
@@ -59,7 +66,8 @@ export function tokkenGetter(){
          }
       }),
       TabsModule.forRoot(),
-      NgxGalleryModule
+      NgxGalleryModule,
+      FileUploadModule
    ],
    providers: [
       AuthService,
@@ -68,7 +76,9 @@ export function tokkenGetter(){
       UserService,
       MemberDetailResolver,
       MemberListResolver,
-      AuthGuard
+      MemberEditResolver,
+      AuthGuard,
+      PreventUnsavedChanges
    ],
    bootstrap: [
       AppComponent
